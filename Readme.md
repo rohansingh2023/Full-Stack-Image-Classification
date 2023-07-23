@@ -1,7 +1,7 @@
 ### About
 
 Here, I've implemented Full-Stack Multi-Class Image Classification in PyTorch.
-We've used the following Tech Stack:
+I've used the following Tech Stack:
 
 - Frontend: NextJS + TailwindCSS,
 - Backend: FastAPI,
