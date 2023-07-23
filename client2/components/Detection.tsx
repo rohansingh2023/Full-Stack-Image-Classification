@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const Detection = () => {
   const [image, setImage] = useState<any>("");
   const [imagePreview, setImagePreview] = useState<any>("");
   const [detection, setDetection] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [text, setText] = useState<boolean>(true);
 
   useEffect(() => {
@@ -22,29 +22,32 @@ const Detection = () => {
 
   const handleDetections = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
     setText(false);
+    const id = toast.loading("Detecting...");
     try {
       const formData = new FormData();
       formData.append("file", image);
       const res = await axios.post("http://127.0.0.1:8000/predict", formData);
 
-      setLoading(false);
+      toast.success("Detection Successfull", {
+        id: id,
+      });
       setDetection(res.data);
       console.log(res);
     } catch (error) {
+      toast.error("Detection Failed!!", {
+        id: id,
+      });
       console.log(error);
     }
   };
 
-  console.log(image);
-
   return (
-    <>
+    <div>
       <Header />
-      <div className="flex flex-col md:flex-row items-center justify-center mt-16 space-y-5 md:space-x-40 ">
+      <div className="flex flex-col md:flex-row items-center justify-center md:mt-32 mt-16 space-y-5 md:space-x-40 ">
         <div>
-          <div className="h-80 w-80 rounded-md border-2 border-dashed">
+          <div className="h-80 w-80 rounded-md border-2 border-black border-dashed">
             {image ? (
               <img
                 src={imagePreview}
@@ -67,6 +70,7 @@ const Detection = () => {
               className="mt-3"
             />
             <button
+              disabled={!image}
               onClick={handleDetections}
               className="bg-red-600 text-white py-1 px-2 rounded-sm hover:bg-red-400"
             >
@@ -75,7 +79,6 @@ const Detection = () => {
           </div>
         </div>
         <div className="">
-          {loading && <p>loading....</p>}
           {detection.length > 0 && (
             <p className="text-xs w-40 p-2 text-center">
               <span className="text-md">Detected image is:</span> <br />
@@ -90,7 +93,7 @@ const Detection = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -33,8 +33,10 @@ yarn dev
 
 Some previews
 
-![home](./images/Screenshot37.png)
+![home](./images/Screenshot40.png)
 
-![home](./images/Screenshot38.png)
+![home](./images/Screenshot41.png)
 
-![home](./images/Screenshot39.png)
+![home](./images/Screenshot42.png)
+
+![home](./images/Screenshot43.png)
